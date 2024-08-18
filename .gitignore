@@ -1,0 +1,14 @@
+# Ignore directories created by virtualenv
+.env
+.flaskenv
+venv
+
+# Ignore Python cache and compiled files
+__pycache__
+*.pyc
+
+# Ignore distribution files
+dist
+
+# Ignore egg-info directories
+*.egg-info
