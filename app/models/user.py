@@ -37,4 +37,5 @@ class Users:
     second_name = Column(String(128), nullable=False)
     email = Column(String(128), nullable=False, unique=True)
     phone_number = Column(String(128), nullable=False, unique=True)
-    user_role = Column(Enum(User), nullable=False)
+    user = Column(Enum(User), nullable=False)
+    password = Column(String(128), nullable=False)

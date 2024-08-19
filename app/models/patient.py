@@ -1,9 +1,10 @@
 from sqlalchemy import Column, String, Datetime
 from sqlalchemy.orm import relationship
 from app.models.user import Users
+from app.models.base_model import BaseClass
 
 
-class Patients(Users):
+class Patients(Users, BaseClass):
     __tablename__ = "patients"
     patient_code = Column(String(60), nullable=False, unique=True)
     DOB = Column(Datetime, nullable=False)

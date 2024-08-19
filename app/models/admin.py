@@ -1,7 +1,8 @@
 from app.models.user import Users
+from app.models.base_model import BaseClass
 
 
-class Admin(Users):
+class Admin(Users, BaseClass):
     __tablename__ = "admin"
 
     def __init__(self, **kwargs):

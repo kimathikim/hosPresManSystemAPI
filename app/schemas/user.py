@@ -1,7 +1,7 @@
-from marshmallow_sqlalchemy import sqlalchemy_auto_schema
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from app.models.user import OnBoarders
 
 
-class onBoarderschema(sqlalchemy_auto_schema):
+class onBoarderschema(SQLAlchemyAutoSchema):
     class meta:
         model = OnBoarders
