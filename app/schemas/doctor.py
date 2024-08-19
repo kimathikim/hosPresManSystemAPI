@@ -1,7 +1,7 @@
-from marshmallow_sqlalchemy import sqlalchemyautoschema
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from app.models.doctor import Doctors
 
 
-class doctorschema(sqlalchemyautoschema):
+class DoctorSchema(SQLAlchemyAutoSchema):
     class meta:
         model = Doctors

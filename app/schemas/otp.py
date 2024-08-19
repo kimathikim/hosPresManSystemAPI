@@ -1,7 +1,7 @@
-from marshmallow_sqlalchemy import sqlalchemyautoschema
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from app.models.otp import OTP
 
 
-class tpschema(sqlalchemyautoschema):
+class tpschema(SQLAlchemyAutoSchema):
     class meta:
         model = OTP

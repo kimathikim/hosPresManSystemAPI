@@ -34,14 +34,14 @@ class DBStorage:
         from app.models.patient import Patients
         from app.models.doctor import Doctors
         from app.models.otp import OTP
-        from app.models.pharmacist import Phamacists
+        from app.models.pharmacist import Pharmacists
         from app.models.dispensation import Dispensation
         from app.models.user import OnBoarders
 
         classes = [
             Patients,
             Prescription,
-            Phamacists,
+            Pharmacists,
             OTP,
             Dispensation,
             AuditLog,
@@ -83,7 +83,8 @@ class DBStorage:
         from app.models.base_model import Base
 
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = sessionmaker(
+            bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
 
