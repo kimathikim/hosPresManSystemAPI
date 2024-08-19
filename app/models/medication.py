@@ -3,6 +3,8 @@
 from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from app.models.base_model import BaseClass, Base
+from app.models.user import OnBoarders
+from app.models.pharmacist import Pharmacists
 
 
 class Medication(BaseClass, Base):
@@ -22,8 +24,8 @@ class Medication(BaseClass, Base):
         nullable=False,
     )
 
-    pharmacist = relationship("pharmacist", back_populates="medications")
-    pharmacy = relationship("Pharmacy", back_populates="medications")
+    pharmacist = relationship(Pharmacists, back_populates="medications")
+    pharmacy = relationship(OnBoarders, back_populates="medications")
 
     def __init__(self, **kwargs):
         """Initialize the Medication model"""

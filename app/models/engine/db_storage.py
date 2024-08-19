@@ -3,6 +3,15 @@
 
 import os
 from sqlalchemy.orm import sessionmaker
+from app.models.audit_log import AuditLog
+from app.models.prescription import Prescription, Med
+from app.models.user import Users
+from app.models.patient import Patients
+from app.models.doctor import Doctors
+from app.models.otp import OTP
+from app.models.pharmacist import Pharmacists
+from app.models.dispensation import Dispensation
+from app.models.user import OnBoarders
 
 
 class DBStorage:
@@ -28,16 +37,6 @@ class DBStorage:
     def all(self, cls=None):
         """Query on the current database session all
         objects of the given class"""
-        from app.models.audit_log import AuditLog
-        from app.models.prescription import Prescription, Med
-        from app.models.user import Users
-        from app.models.patient import Patients
-        from app.models.doctor import Doctors
-        from app.models.otp import OTP
-        from app.models.pharmacist import Pharmacists
-        from app.models.dispensation import Dispensation
-        from app.models.user import OnBoarders
-
         classes = [
             Patients,
             Prescription,

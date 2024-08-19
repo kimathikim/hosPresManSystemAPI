@@ -56,18 +56,21 @@ class BaseClass:
             """returns a string representation of the instance"""
             return "{}.{}".format(type(self).__name__, self.id)
 
-        def to_dict(self):
-            """returns a dictionary representation of the instance"""
-            newDict = self.__dict__.copy()
-            newDict.pop("_sa_instance_state", None)
-            newDict["created_at"] = format_datetime(self.created_at)
-            if "created_at" in newDict:
-                newDict["created_at"] = format_datetime(newDict["created_at"])
-                newDict["__class__"] = self.__class__.__name__
-            if "updated_at" in newDict:
-                newDict["updated_at"] = format_datetime(newDict["updated_at"])
-                newDict[__class__] = self.__class__.__name__
-            return newDict
+    def to_dict(self):
+        """returns a dictionary representation of the instance"""
+        newDict = self.__dict__.copy()
+        newDict.pop("_sa_instance_state", None)
+        newDict["created_at"] = format_datetime(self.created_at)
+        if "created_at" in newDict:
+            newDict["created_at"] = format_datetime(newDict["created_at"])
+        if "updated_at" in newDict:
+            newDict["updated_at"] = format_datetime(newDict["updated_at"])
+        newDict["__class__"] = self.__class__.__name__
+        if "_sa_instance_state" in newDict:
+            del newDict["_sa_instance_state"]
+        return newDict
+
+        return newDict
 
     def save(self):
         self.updated_at = datetime.utcnow()

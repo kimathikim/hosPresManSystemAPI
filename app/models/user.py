@@ -2,6 +2,7 @@ from sqlalchemy import Column, String, Enum
 from sqlalchemy.orm import relationship
 from app.models.base_model import BaseClass, Base
 from enum import Enum as UserEnum
+from app.models.dispensation import Dispensation
 
 
 class Role(UserEnum):
@@ -25,7 +26,7 @@ class OnBoarders(BaseClass, Base):
 
     doctors = relationship("Doctors", backref="on_boarders")
     pharcists = relationship("Pharmacists", backref="on_boarders")
-    dispensation = relationship("Dispensation", backref="on_boards")
+    dispensation = relationship(Dispensation, backref="on_boarders")
 
     def __init__(self, **kwargs):
         """Initialize the class with relevant details."""
