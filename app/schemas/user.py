@@ -1,19 +1,10 @@
-<<<<<<< HEAD
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from app.models.user import OnBoarders
-
-
-class onBoarderschema(SQLAlchemyAutoSchema):
-    class meta:
-        model = OnBoarders
-=======
-from app.models.doctor import Doctors
-from app.models.patient import Patients
-from app.models.pharmacist import Pharmacists
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from apispec import APISpec
-from app.models.user import OnBoarders
 from apispec.ext.marshmallow import MarshmallowPlugin
+from apispec import APISpec
+from app.models.pharmacist import Pharmacists
+from app.models.patient import Patients
+from app.models.doctor import Doctors
+from app.models.user import OnBoarders
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
 class OnBoarderschema(SQLAlchemyAutoSchema):
@@ -60,4 +51,3 @@ spec.components.schema("Doctors", schema=DoctorSchema)
 
 # Generate the Swagger schemas from the APISpec
 swagger_schemas = spec.to_dict()["components"]["schemas"]
->>>>>>> refs/remotes/origin/main

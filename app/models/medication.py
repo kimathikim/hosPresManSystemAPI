@@ -14,12 +14,11 @@ class Medication(BaseClass, Base):
 
     name = Column(String(128), nullable=False)
     quantity = Column(Integer, nullable=False)
-    pharmacy_id = Column(String(62), ForeignKey("on_boarders.id"), nullable=False)
+    pharmacy_id = Column(String(62), ForeignKey(
+        "on_boarders.id"), nullable=False)
     pharmacist_id = Column(
         String(62),
-        ForeignKey(
-            "pharmacists.id"
-        ),
+        ForeignKey("pharmacists.id"),
         nullable=False,
     )
 

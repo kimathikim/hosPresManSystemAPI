@@ -1,10 +1,15 @@
 import os
+import dotenv
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class Config:
     SESSION_TYPE = "sqlalchemy"
     SESSION_SQLALCHEMY = None
-    SECRET_KEY = os.getenv("SECRET_KEY", "mysecretkey")
+    SECRET_KEY = os.getenv("SECRET_KEY")
     MAIL_SERVER = os.getenv("MAIL_SERVER")
     MAIL_PORT = os.getenv("MAIL_PORT")
     MAIL_USERNAME = os.getenv("MAIL_USERNAME")

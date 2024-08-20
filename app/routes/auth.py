@@ -5,6 +5,10 @@ from flasgger import swag_from
 from app.schemas.user import swagger_schemas
 from app.schemas.user_login import login_schemas
 from flask_jwt_extended import jwt_required, create_access_token
+from os import getenv
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 @auth_bp.route("/register", methods=["POST"])
