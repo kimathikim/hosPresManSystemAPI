@@ -6,6 +6,8 @@ from app.routes import register_routes
 from app.routes.auth import *
 from app.routes.medication import *
 from app.routes.patient import *
+from app.routes.dispensation import *
+
 
 
 storage.reload()
