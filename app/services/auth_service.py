@@ -1,3 +1,4 @@
+from flask.json import jsonify
 from app.models.user import OnBoarders
 from app.models.doctor import Doctors
 from app.models.pharmacist import Pharmacists
@@ -8,12 +9,12 @@ from app.models.user import User
 import bcrypt
 
 
-def hash_password(password: str) -> bytes:
-    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+def hash_password(password: str) -> str:
+    return str(bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()))
 
 
-def check_password(password: str, hashed: bytes) -> bool:
-    return bcrypt.checkpw(password.encode("utf-8"), hashed)
+def check_password(password: str, hashed: str) -> bool:
+    return bcrypt.checkpw(password.encode("utf-8"), hashed.encode("utf-8"))
 
 
 #
@@ -105,10 +106,13 @@ def register_user(data):
         if field not in data:
             return {"error": f"{field} is required"}
 
-    user_model = user_roles[user_role]["model"]
-    user = user_model(**data)
-    user.save()
-    return user.to_dict()
+    try:
+        user_model = user_roles[user_role]["model"]
+        user = user_model(**data)
+        user.save()
+        return jsonify({"success": user.to_dict()}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 def login_user(data):

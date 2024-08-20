@@ -4,7 +4,8 @@ from datetime import datetime
 
 
 def format_datetime(dt, fmt="%Y-%m-%d %H:%M:%S"):
-    """Format a datetime object into a string."""
+    if isinstance(dt, str):
+        dt = datetime.strptime(dt, fmt)
     return dt.strftime(fmt)
 
 
