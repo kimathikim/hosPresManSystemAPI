@@ -5,6 +5,8 @@ from app.extensions import init_extensions
 from app.routes import register_routes
 
 from app.routes.auth import *
+from app.routes.medication import *
+
 
 storage.reload()
 

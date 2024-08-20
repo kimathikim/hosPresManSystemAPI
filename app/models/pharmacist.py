@@ -10,6 +10,8 @@ class Pharmacists(Users, BaseClass, Base):
     is_active = Column(Boolean, nullable=False)
     pharmacy_id = Column(String(60), ForeignKey("on_boarders.id"))
     despensation = relationship(Dispensation, backref="pharmacists")
+    medications =Column(String(60), ForeignKey("medications.id"))
+
 
     def __init__(self, **kwargs):
         """initialize the class with relevant details."""
