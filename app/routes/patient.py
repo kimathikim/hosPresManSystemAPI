@@ -1,12 +1,16 @@
 from app.routes import auth_bp
 from flask import request
 from app.services.auth_service import register_user
+from flasgger import swag_from
+from app.schemas.user import swagger_schemas
+
+
 
 
 @auth_bp.route('/reg_patient', methods=['POST'])
 @swag_from(
     {
-        "tags": ["patient Registration"],
+        "tags": ["Registration"],
         "description": "Register a new patient",
         "parameters": [
             {
@@ -14,7 +18,7 @@ from app.services.auth_service import register_user
                 "description": "patient registration data",
                 "in": "body",
                 "required": False,
-                "schema": swagger_schemas["Patient"],
+                "schema": swagger_schemas["Patients"],
             }
         ],
         "responses": {

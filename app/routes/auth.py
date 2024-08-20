@@ -14,7 +14,7 @@ load_dotenv()
 @auth_bp.route("/register", methods=["POST"])
 @swag_from(
     {
-        "tags": ["User Registration"],
+        "tags": ["Registration"],
         "description": "Register a new user",
         "parameters": [
             {

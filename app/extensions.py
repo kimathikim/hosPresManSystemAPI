@@ -23,7 +23,7 @@ swagger = Swagger(
             "termsOfService": "http://tufiked/terms",
             "version": "0.0.1",
         },
-        "host": "localhost:5000",  # overrides localhost:500
+        "host": "127.0.0.1:5000",  # overrides localhost:500
         "basePath": "/api/v1",  # base bash for blueprint registration
         "schemes": ["http", "https"],
         "operationId": "getmyData",
