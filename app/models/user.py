@@ -19,8 +19,8 @@ class User(UserEnum):
 
 class OnBoarders(BaseClass, Base):
     __tablename__ = "on_boarders"
-    name = Column(String(70), nullable=False, unique=True)
-    city = Column(String(70), nullable=False, unique=True)
+    name = Column(String(70), nullable=False)
+    city = Column(String(70), nullable=False)
     address = Column(String(128), nullable=False, unique=True)
     role = Column(Enum(Role), nullable=False)
 
