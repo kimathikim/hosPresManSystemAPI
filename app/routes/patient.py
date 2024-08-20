@@ -5,9 +5,7 @@ from flasgger import swag_from
 from app.schemas.user import swagger_schemas
 
 
-
-
-@auth_bp.route('/reg_patient', methods=['POST'])
+@auth_bp.route("/reg_patient", methods=["POST"])
 @swag_from(
     {
         "tags": ["Registration"],
@@ -39,7 +37,3 @@ from app.schemas.user import swagger_schemas
 def reg_patient():
     data = request.get_json()
     return register_user(data)
-
-
-
-

@@ -1,32 +1,24 @@
 from flask.json import jsonify
+import os
+from app.models import storage
+from flask_jwt_extended import create_access_token
 import bcrypt
-from app.models.user import User
 from app.models.admin import Admin
 from app.models.patient import Patients
 from app.models.pharmacist import Pharmacists
 from app.models.doctor import Doctors
 from app.models.user import OnBoarders
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def hash_password(password: str) -> str:
-    return str(bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()))
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
 
 
 def check_password(password: str, hashed: str) -> bool:
     return bcrypt.checkpw(password.encode("utf-8"), hashed.encode("utf-8"))
-
-
-#
-# hashed_password = hash_password("my_password")
-#
-# # Check a password
-# if check_password("my_password", hashed_password):
-#     print("Password is correct")
-# else:
-#     print("Password is incorrect")
-#
-#
-# register a new Doctor ctor, Pharmacist, Patient, Admin, OnBoarder
 
 
 def register_user(data):
@@ -115,4 +107,16 @@ def register_user(data):
 
 
 def login_user(data):
-    pass
+    if data.get("email") and data.get("password"):
+        user = None
+        user_roles = [Pharmacists, Doctors]
+        for role in user_roles:
+            user = storage.get_by_email(role, data["email"])
+            print(user)
+            if user:
+                break
+        if user and check_password(data["password"], user.password):
+            access_token = create_access_token(identity=user.id)
+            return jsonify({"access_token": access_token}), 200
+        return jsonify({"error": "Invalid credentials"}), 401
+    return jsonify({"error": "Email and password required"}), 400

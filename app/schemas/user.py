@@ -3,6 +3,7 @@ from apispec import APISpec
 from app.models.pharmacist import Pharmacists
 from app.models.patient import Patients
 from app.models.doctor import Doctors
+from app.models.admin import Admin
 from app.models.user import OnBoarders
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
@@ -28,6 +29,13 @@ class Patientschema(SQLAlchemyAutoSchema):
         exclude = ["id", "created_at", "updated_at"]
 
 
+class Adminschema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = Admin
+        include_fk = True
+        exclude = ["id", "created_at", "updated_at"]
+
+
 class DoctorSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
         model = Doctors
@@ -46,6 +54,7 @@ spec = APISpec(
 # Register the Marshmallow Schemas in the APISpec
 spec.components.schema("OnBoarders", schema=OnBoarderschema)
 spec.components.schema("Patients", schema=Patientschema)
+spec.components.schema("Admin", schema=Adminschema)
 spec.components.schema("Pharmacists", schema=Pharmacistschema)
 spec.components.schema("Doctors", schema=DoctorSchema)
 

@@ -6,6 +6,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+
 class Config:
     SESSION_TYPE = "sqlalchemy"
     SESSION_SQLALCHEMY = None
@@ -16,3 +19,4 @@ class Config:
     MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
     MAIL_USE_TLS = os.getenv("MAIL_USE_TLS", "True") == "True"
     MAIL_USE_SSL = os.getenv("MAIL_USE_SSL", "False") == "True"
+    JWT_SECRET_KEY = os.getenv("SECRET_KEY")

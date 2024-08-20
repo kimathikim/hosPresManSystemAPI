@@ -7,7 +7,7 @@ from app.routes.auth import *
 from app.routes.medication import *
 from app.routes.patient import *
 from app.routes.dispensation import *
-
+from app.routes.admin import *
 
 
 storage.reload()

@@ -1,17 +1,14 @@
-from flask import request, jsonify
+from flask import request
 from app.routes import auth_bp
 from app.services.auth_service import login_user, register_user
 from flasgger import swag_from
 from app.schemas.user import swagger_schemas
-from app.schemas.user_login import login_schemas
-from flask_jwt_extended import jwt_required, create_access_token
-from os import getenv
 from dotenv import load_dotenv
 
 load_dotenv()
 
 
-@auth_bp.route("/register", methods=["POST"])
+@auth_bp.route("/register_admin", methods=["POST"])
 @swag_from(
     {
         "tags": ["Registration"],
@@ -19,12 +16,10 @@ load_dotenv()
         "parameters": [
             {
                 "name": "data",
-                "description": "User registration data. \
-                first register the Roles(Hospital, Pharmacy), pharmacist and doctor. \
-                Use the models below 👇",
+                "description": "Registration of the admin",
                 "in": "body",
                 "required": False,
-                "schema": swagger_schemas["OnBoarders"],
+                "schema": swagger_schemas["Admin"],
             }
         ],
         "responses": {
@@ -33,9 +28,7 @@ load_dotenv()
                 "schema": {
                     "type": "object",
                     "properties": {
-                        "patient": swagger_schemas["Patients"],
-                        "pharmacist": swagger_schemas["Pharmacists"],
-                        "doctor": swagger_schemas["Doctors"],
+                        "patient": swagger_schemas["Admin"],
                     },
                 },
             },
@@ -53,15 +46,22 @@ def register():
 @auth_bp.route("/login", methods=["POST"])
 @swag_from(
     {
-        "tags": ["User Login"],
+        "tags": ["Authentication", "Pharmacy"],
         "description": "Login to the system",
         "parameters": [
             {
                 "name": "data",
                 "description": "Login with your cridetials: email and password",
                 "in": "body",
-                "required": False,
-                "schema": login_schemas["Doctors"],
+                "required": True,
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "email": {"type": "string", "format": "email"},
+                        "password": {"type": "string", "format": "password"},
+                    },
+                    "required": ["email", "password"],
+                },
             }
         ],
         "responses": {
@@ -70,7 +70,7 @@ def register():
                 "schema": {
                     "type": "object",
                     "properties": {
-                        "pharmacist": login_schemas["Pharmacists"],
+                        "access_token": {"type": "string"},
                     },
                 },
             },
@@ -82,7 +82,4 @@ def register():
 def login():
     data = request.get_json()
     result = login_user(data)
-    if result:
-        return jsonify(result), 200
-    else:
-        return jsonify({"error": "Login failed"}), 401
+    return result

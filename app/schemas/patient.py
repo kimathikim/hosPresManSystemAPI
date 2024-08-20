@@ -1,7 +1,6 @@
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from app.models.patient import Patients
+from marshmallow import Schema, fields
 
 
-class patientschema(SQLAlchemyAutoSchema):
-    class meta:
-        model = Patients
+class patientschema(Schema):
+    email = fields.Str()
+    password = fields.Str()

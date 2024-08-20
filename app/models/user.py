@@ -27,6 +27,7 @@ class OnBoarders(BaseClass, Base):
     doctors = relationship("Doctors", backref="on_boarders")
     pharcists = relationship("Pharmacists", backref="on_boarders")
     dispensation = relationship(Dispensation, backref="on_boarders")
+    medications = relationship("Medication", backref="on_boarders")
 
     def __init__(self, **kwargs):
         """Initialize the class with relevant details."""

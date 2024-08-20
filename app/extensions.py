@@ -19,6 +19,7 @@ swagger = Swagger(
                 "responsibleDeveloper": "Brian Kimathi",
                 "email": "briankimathi94@gmail.com",
                 "url": "https://tufiked.live",
+                "authentication": "Bearer <token>",
             },
             "termsOfService": "http://tufiked/terms",
             "version": "0.0.1",
