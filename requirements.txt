@@ -19,7 +19,7 @@ command-not-found==0.3
 commonmark==0.9.1
 cov-core==1.15.0
 coverage==6.2
-cryptography==3.4.8
+cryptography==42.0.4
 cupshelpers==1.0
 dbus-python==1.2.18
 debtcollector==3.0.0
