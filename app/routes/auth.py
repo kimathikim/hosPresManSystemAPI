@@ -19,7 +19,7 @@ load_dotenv()
                 "description": "Registration of the admin",
                 "in": "body",
                 "required": False,
-                "schema": swagger_schemas["Admin"],
+                "schema": swagger_schemas["Admins"],
             }
         ],
         "responses": {
@@ -28,7 +28,7 @@ load_dotenv()
                 "schema": {
                     "type": "object",
                     "properties": {
-                        "patient": swagger_schemas["Admin"],
+                        "Admin": swagger_schemas["Admins"],
                     },
                 },
             },
@@ -39,7 +39,6 @@ load_dotenv()
 )
 def register():
     data = request.get_json()
-    print(data)
     return register_user(data)
 
 
@@ -62,7 +61,7 @@ def register():
                     },
                     "required": ["email", "password"],
                 },
-            }
+            },
         ],
         "responses": {
             "201": {

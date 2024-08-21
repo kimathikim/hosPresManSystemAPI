@@ -22,9 +22,22 @@ def add_med(data):
     )
 
     new_medication.save()
-    return {"message": "mdication added succz"}
+    return {"message": "mdication added"}
 
 
 def show_med():
     medications = storage.all("Medication")
     return jsonify({"s": medications})
+
+
+def update_med(med_id, data):
+    if med_id is None:
+        return jsonify({"error": "Medication not found"})
+    medication = storage.get(Medication, med_id)
+    if not medication:
+        return jsonify({"error": "Medication not found"})
+
+    medi = storage.update(medication, data)
+    if medi is not None:
+        return jsonify({"message": "Medication updated"})
+    return jsonify({"error": "Failed"})

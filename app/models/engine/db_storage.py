@@ -82,7 +82,8 @@ class DBStorage:
         from app.models.base_model import Base
 
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = sessionmaker(
+            bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
 
@@ -97,11 +98,26 @@ class DBStorage:
             return obj
         return None
 
-    # get object by email
+    def update(self, obj, data):
+        if obj is None or data is None:
+            return None
+        for key, value in data.items():
+            if hasattr(obj, key):
+                setattr(obj, key, value)
+        self.save()
+        return obj
 
     def get_by_email(self, cls, email):
         """get an object from the database"""
         if cls is not None and email is not None:
             obj = self.__session.query(cls).filter_by(email=email).first()
+            return obj
+        return None
+
+    def get_by_code(self, cls, code):
+        """get an object from the database"""
+        if cls is not None and code is not None:
+            obj = self.__session.query(cls).filter_by(
+                patient_code=code).first()
             return obj
         return None

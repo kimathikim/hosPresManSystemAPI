@@ -26,7 +26,7 @@ class Patientschema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
         model = Patients
         include_fk = True
-        exclude = ["id", "created_at", "updated_at"]
+        exclude = ["id", "created_at", "updated_at", "patient_code"]
 
 
 class Adminschema(SQLAlchemyAutoSchema):
@@ -54,7 +54,7 @@ spec = APISpec(
 # Register the Marshmallow Schemas in the APISpec
 spec.components.schema("OnBoarders", schema=OnBoarderschema)
 spec.components.schema("Patients", schema=Patientschema)
-spec.components.schema("Admin", schema=Adminschema)
+spec.components.schema("Admins", schema=Adminschema)
 spec.components.schema("Pharmacists", schema=Pharmacistschema)
 spec.components.schema("Doctors", schema=DoctorSchema)
 

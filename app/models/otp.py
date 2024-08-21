@@ -5,7 +5,7 @@ from app.models.base_model import BaseClass, Base
 
 class OTP(BaseClass, Base):
     __tablename__ = "otps"
-    otp_code = Column(String(6), nullable=False)
+    otp_code = Column(String(60), nullable=False)
     prescription_id = Column(String(60), ForeignKey("prescriptions.id"))
     expires_at = Column(String(30), nullable=False)
     is_used = Column(Boolean, default=False)

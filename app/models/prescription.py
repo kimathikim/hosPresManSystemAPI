@@ -9,26 +9,33 @@ class Med(BaseClass, Base):
     __tablename__ = "meds"
     name = Column(String(128), nullable=False)
     dosage = Column(String(128), nullable=False)
-    prescription_id = Column(String(60), ForeignKey("prescriptions.id"))
+    prescription_id = Column(String(60), ForeignKey(
+        "prescriptions.id"), nullable=False)
+
+    prescription = relationship("Prescription", back_populates="meds")
 
     def __init__(self, **kwargs):
-        """initialize the class with relevant details."""
+        """Initialize the class with relevant details."""
         super().__init__(**kwargs)
 
 
 class Prescription(BaseClass, Base):
     __tablename__ = "prescriptions"
-    prescription_code = Column(String(128), nullable=False, unique=True)
-    patient_id = Column(String(60), ForeignKey("patients.id"))
-    doctor_id = Column(String(60), ForeignKey("doctors.id"))
+    prescription_code = Column(String(60), nullable=False, unique=True)
+    patient_id = Column(String(60), ForeignKey("patients.id"), nullable=False)
+    doctor_id = Column(String(60), ForeignKey("doctors.id"), nullable=False)
     comment = Column(String(200), nullable=True)
+    updated_by = Column(String(60), ForeignKey(
+        "pharmacists.id"), nullable=True)
     is_dispensed = Column(Boolean, default=False)
-    meds = relationship(Med, backref="prescriptions")
+
+    meds = relationship("Med", back_populates="prescription")
     dispensation = relationship(
-        Dispensation, backref=backref("presctiprions", uselist=False)
+        Dispensation, backref=backref("prescription", uselist=False)
     )
-    OTP = relationship(OTP, backref=backref("prescriptions", uselist=False))
+    OTP = relationship(OTP, backref=backref("prescription", uselist=False))
 
     def __init__(self, **kwargs):
-        """initialize the class with relevant details."""
+        """Initialize the class with relevant details."""
         super().__init__(**kwargs)
+

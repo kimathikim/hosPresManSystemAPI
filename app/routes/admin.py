@@ -3,7 +3,7 @@ from app.routes import auth_bp
 from app.services.auth_service import register_user
 from flasgger import swag_from
 from app.schemas.user import swagger_schemas
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 @auth_bp.route("/register", methods=["POST"])
@@ -32,7 +32,7 @@ from flask_jwt_extended import jwt_required
             },
         ],
         "responses": {
-            "201": {
+            "204": {
                 "description": "User registered successfully",
                 "schema": {
                     "type": "object",
@@ -43,12 +43,11 @@ from flask_jwt_extended import jwt_required
                     },
                 },
             },
-            "400": {"description": "Bad request"},
-            "500": {"description": "Server error"},
+            "403": {"description": "Bad request"},
+            "503": {"description": "Server error"},
         },
     }
 )
 def register_by_admin():
     data = request.get_json()
-    print(data)
     return register_user(data)
