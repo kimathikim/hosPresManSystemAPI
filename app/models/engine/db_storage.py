@@ -13,6 +13,8 @@ from app.models.pharmacist import Pharmacists
 from app.models.dispensation import Dispensation
 from app.models.user import OnBoarders
 
+import pymysql
+
 
 class DBStorage:
     """DBStorage class for the Hospital prescription management system"""
@@ -23,7 +25,7 @@ class DBStorage:
         from app.models.base_model import Base
 
         self.__engine = create_engine(
-            "mysql+mysqldb://{}:{}@{}/{}".format(
+            "mysql+pymysql://{}:{}@{}/{}".format(
                 os.getenv("HPMS_MYSQL_USER"),
                 os.getenv("HPMS_MYSQL_PWD"),
                 os.getenv("HPMS_MYSQL_HOST"),

@@ -124,5 +124,5 @@ def login_user(data):
                 identity=user.id, expires_delta=timedelta(days=1)
             )
             return jsonify({"access_token": access_token}), 200
-        return jsonify({"error": "Invalid credentials"}), 401
+        return jsonify({"error": "Invalid credentia"}), 401
     return jsonify({"error": "Email and password required"}), 400
