@@ -145,7 +145,7 @@ PyYAML==5.4.1
 referencing==0.35.1
 reportbug===11.4.1ubuntu1
 reportlab==3.6.8
-requests==2.25.1
+requests==2.32.2
 rfc3986==1.5.0
 rich==11.2.0
 rpds-py==0.20.0
