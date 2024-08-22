@@ -114,15 +114,16 @@ def login_user(data):
     if data.get("email") and data.get("password"):
         user = None
         user_roles = [Pharmacists, Doctors, Admin]
+        user_role = None
         for role in user_roles:
             user = storage.get_by_email(role, data["email"])
-            print(user)
             if user:
+                user_role = role.__name__
                 break
         if user and check_password(data["password"], user.password):
             access_token = create_access_token(
                 identity=user.id, expires_delta=timedelta(days=1)
             )
-            return jsonify({"access_token": access_token}), 200
-        return jsonify({"error": "Invalid credentia"}), 401
+            return jsonify({"access_token": access_token, "role": user_role}), 200
+        return jsonify({"error": "Invalid credentials"}), 401
     return jsonify({"error": "Email and password required"}), 400
