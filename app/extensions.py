@@ -24,7 +24,7 @@ swagger = Swagger(
             "termsOfService": "http://tufiked/terms",
             "version": "0.0.1",
         },
-        "host": "https://hpms-0be27dd3c23f.herokuapp.com/",  # overrides localhost:500
+        "host": "https://hpms-0be27dd3c23f.herokuapp.com",  # overrides localhost:500
         "basePath": "/api/v1",  # base bash for blueprint registration
         "schemes": ["http", "https"],
         "operationId": "getmyData",
