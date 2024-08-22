@@ -37,5 +37,5 @@ def init_extensions(app):
     ma.init_app(app)
     jwt.init_app(app)
     mail.init_app(app)
-    cors.init_app(app, origins="0.0.0.0")
+    cors.init_app(app, resources={r"/api/v1*": {"origins": "*"}})
     swagger.init_app(app)
