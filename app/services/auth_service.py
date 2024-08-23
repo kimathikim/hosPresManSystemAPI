@@ -131,17 +131,24 @@ def login_user(data):
 
 def get_pharmacies():
     pharmacies = [sanitize_object(pharmacy) for pharmacy in storage.all(OnBoarders)]
-    if pharmacies and pharmacies[0] and pharmacies[0]["role"] == "Pharmacies":
-        return jsonify({"hospitals": pharmacies})
-
-    return jsonify({"error": "No pharmacisies found"})
+    pharmacies_with_role_pharmacy = [
+        pharmacy
+        for pharmacy in pharmacies
+        if pharmacy and pharmacy["role"] == "Pharmacy"
+    ]
+    if pharmacies_with_role_pharmacy:
+        return jsonify({"pharmacies": pharmacies_with_role_pharmacy})
+    return jsonify({"error": "No pharmacies found"})
 
 
 def get_hospitals():
     hos = [sanitize_object(hospital) for hospital in storage.all(OnBoarders)]
-    if hos and hos[0] and hos[0]["role"] == "Hospital":
-        return jsonify({"hospitals": hos})
-    return jsonify({"error": "No  hospitals found"})
+    hos_with_role_hospital = [
+        hospital for hospital in hos if hospital and hospital["role"] == "Hospital"
+    ]
+    if hos_with_role_hospital:
+        return jsonify({"hospitals": hos_with_role_hospital})
+    return jsonify({"error": "No hospitals found"})
 
 
 def get_doctors():
