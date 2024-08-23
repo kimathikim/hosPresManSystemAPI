@@ -3,7 +3,7 @@ from app.services.encryption_service import generate_unique_code
 from app.models.otp import OTP
 
 
-def add_otp(prescription_id: str) -> dict:
+def add_otp(prescription_id: str):
     # otp should expire after 3 daysexpires_at
     expires_at = datetime.now() + timedelta(days=3)
     otp = generate_unique_code()
@@ -11,5 +11,5 @@ def add_otp(prescription_id: str) -> dict:
     try:
         otp.save()
     except Exception as e:
-        return {"error": str(e)}
-    return {"success": otp.to_dict()}
+        return e
+    return otp.to_dict()

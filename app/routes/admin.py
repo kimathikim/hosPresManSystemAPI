@@ -1,3 +1,9 @@
+from app.services.auth_service import (
+    get_pharmacies,
+    get_hospitals,
+    get_doctors,
+    get_pharmacists,
+)
 from flask import request, current_app
 from app.routes import auth_bp
 from app.services.auth_service import register_user
@@ -51,3 +57,135 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 def register_by_admin():
     data = request.get_json()
     return register_user(data)
+
+
+@auth_bp.route("/pharmacies", methods=["get"])
+@jwt_required()
+@swag_from(
+    {
+        "security": [{"bearer": []}],
+        "tags": ["Admin"],
+        "description": "get all hospitals",
+        "parameters": [
+            {
+                "name": "Authorization",
+                "description": "Bearer token for authentication. Format: 'Bearer <token>'",
+                "in": "header",
+                "required": True,
+                "type": "string",
+            },
+        ],
+        "responses": {
+            "200": {
+                "description": "successful operation",
+                "schema": {
+                    "type": "array",
+                    "items": swagger_schemas["OnBoarders"],
+                },
+            },
+            "403": {"description": "forbidden"},
+            "503": {"description": "server error"},
+        },
+    }
+)
+def get_all_phamacies():
+    return get_pharmacies()
+
+
+@auth_bp.route("/hospitals", methods=["get"])
+@jwt_required()
+@swag_from(
+    {
+        "security": [{"bearer": []}],
+        "tags": ["Admin"],
+        "description": "get all hospitals",
+        "parameters": [
+            {
+                "name": "Authorization",
+                "description": "Bearer token for authentication. Format: 'Bearer <token>'",
+                "in": "header",
+                "required": True,
+                "type": "string",
+            },
+        ],
+        "responses": {
+            "200": {
+                "description": "successful operation",
+                "schema": {
+                    "type": "array",
+                    "items": swagger_schemas["OnBoarders"],
+                },
+            },
+            "403": {"description": "forbidden"},
+            "503": {"description": "server error"},
+        },
+    }
+)
+def get_all_hospitals():
+    return get_hospitals()
+
+
+@auth_bp.route("/doctors", methods=["GET"])
+@jwt_required()
+@swag_from(
+    {
+        "security": [{"Bearer": []}],
+        "tags": ["Admin"],
+        "description": "Get all registered doctors",
+        "parameters": [
+            {
+                "name": "Authorization",
+                "description": "Bearer token for authentication. Format: 'Bearer <token>'",
+                "in": "header",
+                "required": True,
+                "type": "string",
+            },
+        ],
+        "responses": {
+            "200": {
+                "description": "Successful operation",
+                "schema": {
+                    "type": "array",
+                    "items": swagger_schemas["Doctors"],
+                },
+            },
+            "403": {"description": "Forbidden"},
+            "503": {"description": "Server error"},
+        },
+    }
+)
+def get_all_doctors():
+    return get_doctors()
+
+
+@auth_bp.route("/pharmacists", methods=["GET"])
+@jwt_required()
+@swag_from(
+    {
+        "security": [{"Bearer": []}],
+        "tags": ["Admin"],
+        "description": "Get all registered pharmacist",
+        "parameters": [
+            {
+                "name": "Authorization",
+                "description": "Bearer token for authentication. Format: 'Bearer <token>'",
+                "in": "header",
+                "required": True,
+                "type": "string",
+            },
+        ],
+        "responses": {
+            "200": {
+                "description": "Successful operation",
+                "schema": {
+                    "type": "array",
+                    "items": swagger_schemas["Pharmacists"],
+                },
+            },
+            "403": {"description": "Forbidden"},
+            "503": {"description": "Server error"},
+        },
+    }
+)
+def get_all_phamacists():
+    return get_pharmacists()

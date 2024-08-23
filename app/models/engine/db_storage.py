@@ -51,17 +51,15 @@ class DBStorage:
             Doctors,
             OnBoarders,
         ]
-        objects = {}
+        objects = []
         if cls:
             if cls in classes:
                 for obj in self.__session.query(cls).all():
-                    key = "{}.{}".format(obj.__class__.__name__, obj.id)
-                    objects[key] = obj
+                    objects.append((obj))
         else:
             for cls in classes:
                 for obj in self.__session.query(cls).all():
-                    key = "{}.{}".format(obj.__class__.__name__, obj.id)
-                    objects[key] = obj
+                    objects.append((obj))
         return objects
 
     def new(self, obj):

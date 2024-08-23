@@ -7,6 +7,8 @@ from app.services.encryption_service import prescription_code
 from app.models.patient import Patients
 from app.models.otp import OTP
 
+from app.utils.sanitization import sanitize_object
+
 
 def add_prescription(patient_code: str, data: dict):
     data["prescription_code"] = prescription_code()
@@ -26,7 +28,7 @@ def get_patient(data):
     patient = storage.get_by_code(Patients, data)
     if not patient:
         return ({"error": "Patient not found"},)
-    return jsonify({"success": patient.to_dict()}), 200
+    return jsonify({"success": sanitize_object((patient))}), 200
 
 
 def add_pres_med(data: dict):
@@ -39,7 +41,7 @@ def add_pres_med(data: dict):
         med.save()
     except Exception as e:
         return jsonify({"error": str(e)}), 400
-    return jsonify({"success": med.to_dict()}), 201
+    return jsonify({"success": med}), 201
 
 
 def update_prescription(data, pres_id):
@@ -60,7 +62,7 @@ def get_prescription(data: dict):
         return ({"error": "OTP not found"},)
     prescription = storage.get(Prescription, OTP.prescription_id)
 
-    return jsonify({"success": prescription.__dict__}), 200
+    return jsonify({"success": sanitize_object(prescription)}), 200
 
 
 def get_all_prescriptions():

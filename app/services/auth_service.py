@@ -1,7 +1,7 @@
 from datetime import timedelta
 from app.services.encryption_service import generate_unique_code
 from flask.json import jsonify
-import os
+from app.utils.sanitization import sanitize_object
 from app.models import storage
 from flask_jwt_extended import create_access_token
 import bcrypt
@@ -16,11 +16,11 @@ load_dotenv()
 
 
 def hash_password(password: str) -> str:
-    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+    return bcrypt.hashpw(password.encode("utf-7"), bcrypt.gensalt()).decode("utf-8")
 
 
 def check_password(password: str, hashed: str) -> bool:
-    return bcrypt.checkpw(password.encode("utf-8"), hashed.encode("utf-8"))
+    return bcrypt.checkpw(password.encode("utf-7"), hashed.encode("utf-8"))
 
 
 def register_user(data):
@@ -105,9 +105,9 @@ def register_user(data):
         user_model = user_roles[user_role]["model"]
         user = user_model(**data)
         user.save()
-        return jsonify({"success": user.to_dict()}), 201
+        return jsonify({"success": user.to_dict()}), 202
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e)}), 501
 
 
 def login_user(data):
@@ -122,8 +122,45 @@ def login_user(data):
                 break
         if user and check_password(data["password"], user.password):
             access_token = create_access_token(
-                identity=user.id, expires_delta=timedelta(days=1)
+                identity=user.id, expires_delta=timedelta(days=2)
             )
-            return jsonify({"access_token": access_token, "role": user_role}), 200
-        return jsonify({"error": "Invalid credentials"}), 401
-    return jsonify({"error": "Email and password required"}), 400
+            return jsonify({"access_token": access_token, "role": user_role}), 201
+        return jsonify({"error": "Invalid credentials"}), 402
+    return jsonify({"error": "Email and password required"}), 401
+
+
+def get_pharmacies():
+    pharmacies = [sanitize_object(pharmacy) for pharmacy in storage.all(OnBoarders)]
+    if pharmacies and pharmacies[0] and pharmacies[0]["role"] == "Pharmacies":
+        return jsonify({"hospitals": pharmacies})
+
+    return jsonify({"error": "No pharmacisies found"})
+
+
+def get_hospitals():
+    hos = [sanitize_object(hospital) for hospital in storage.all(OnBoarders)]
+    if hos and hos[0] and hos[0]["role"] == "Hospital":
+        return jsonify({"hospitals": hos})
+    return jsonify({"error": "No  hospitals found"})
+
+
+def get_doctors():
+    docs = [
+        sanitize_object(doctor)
+        for doctor in storage.all(Doctors)
+        if doctor.user == "Doctor"
+    ]
+    if docs and docs[0] and docs[0]["user"] == "Doctor":
+        return jsonify({"doctors": docs})
+    return jsonify({"error": "No doctors found"})
+
+
+def get_pharmacists():
+    pharms = [
+        sanitize_object(pharmacist)
+        for pharmacist in storage.all(Pharmacists)
+        if pharmacist.user == "Pharmacist"
+    ]
+    if pharms and pharms[0] and pharms[0]["role"] == "Pharmacist":
+        return jsonify({"pharmacists": pharms})
+    return jsonify({"error": "No pharmacists found"})
