@@ -28,7 +28,7 @@ def get_patient(data):
     patient = storage.get_by_code(Patients, data)
     if not patient:
         return ({"error": "Patient not found"},)
-    return jsonify({"success": sanitize_object((patient))}), 200
+    return jsonify({"success": f"{sanitize_object((patient))}"}), 200
 
 
 def add_pres_med(data: dict):

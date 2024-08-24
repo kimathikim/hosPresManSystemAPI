@@ -2,6 +2,7 @@ from datetime import timedelta
 from app.services.encryption_service import generate_unique_code
 from flask.json import jsonify
 from app.utils.sanitization import sanitize_object
+from app.utils.sms import send_code_to_patient
 from app.models import storage
 from flask_jwt_extended import create_access_token
 import bcrypt
@@ -86,6 +87,8 @@ def register_user(data):
         user_role = data["user"]
         if user_role == "Patient":
             data["patient_code"] = str(generate_unique_code())
+            send_code_to_patient(data["phone_number"], data["patient_code"])
+
     else:
         return {"error": "Role or user is required"}
 
