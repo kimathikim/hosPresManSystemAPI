@@ -156,6 +156,8 @@ def login_user(data):
                     user_role = "Pharmacist"
                 if user_role == Doctors:
                     user_role = "Doctor"
+                if user_role == Admin:
+                    user_role = "Admin"
                 break
         print(user_role)
         if user and check_password(data["password"], user.password):
