@@ -35,7 +35,7 @@ def add_pres_med(data: dict):
     pres = storage.get(Prescription, data["prescription_id"])
     print(data)
     if not pres:
-        return jsonify({"error": "Prescription not found"}), 400
+        return jsonify({"error": "Prescription not  found"}), 400
     med = Med(**data)
     try:
         med.save()
