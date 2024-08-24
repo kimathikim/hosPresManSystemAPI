@@ -192,12 +192,11 @@ def get_hospitals():
 
 
 def get_doctors(id):
-    docs = [
-        sanitize_object(doctor)
-        for doctor in storage.all(Doctors)
-        if doctor.user == "Doctor"
+    docs = [sanitize_object(doctor) for doctor in storage.all(Doctors)]
+    doc_hos = [
+        doctor for doctor in docs if doctor is not None and doctor["hospital_id"] == id
     ]
-    doc_hos = [doctor for doctor in docs if doctor and doctor["hospital_id"] == id]
+
     if doc_hos:
         return jsonify({"doctors": doc_hos})
     return jsonify({"error": "No doctors found"})
@@ -209,7 +208,9 @@ def get_pharmacists(id):
         for pharmacist in storage.all(Pharmacists)
         if pharmacist.user == "Pharmacist"
     ]
-    doc_hos = [pharm for pharm in pharms if pharm and pharm["hospital_id"] == id]
+    doc_hos = [
+        pharm for pharm in pharms if pharm is not None and pharm["pharmacy_id"] == id
+    ]
     if doc_hos:
-        return jsonify({"success": doc_hos})
+        return jsonify({"pharmacies": doc_hos})
     return jsonify({"error": "No pharmacists found"})
