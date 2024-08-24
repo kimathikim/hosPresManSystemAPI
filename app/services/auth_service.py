@@ -152,6 +152,10 @@ def login_user(data):
             user = storage.get_by_email(role, data["email"])
             if user:
                 user_role = role.__name__
+                if user_role == Pharmacists:
+                    user_role = "Pharmacist"
+                if user_role == Doctors:
+                    user_role = "Doctor"
                 break
         if user and check_password(data["password"], user.password):
             access_token = create_access_token(
@@ -163,7 +167,8 @@ def login_user(data):
 
 
 def get_pharmacies():
-    pharmacies = [sanitize_object(pharmacy) for pharmacy in storage.all(OnBoarders)]
+    pharmacies = [sanitize_object(pharmacy)
+                  for pharmacy in storage.all(OnBoarders)]
     pharmacies_with_role_pharmacy = [
         pharmacy
         for pharmacy in pharmacies
