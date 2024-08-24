@@ -151,7 +151,7 @@ def login_user(data):
         for role in user_roles:
             user = storage.get_by_email(role, data["email"])
             if user:
-                user_role = role.__name__
+                user_role = role
                 if user_role == Pharmacists:
                     user_role = "Pharmacist"
                 if user_role == Doctors:
@@ -168,8 +168,7 @@ def login_user(data):
 
 
 def get_pharmacies():
-    pharmacies = [sanitize_object(pharmacy)
-                  for pharmacy in storage.all(OnBoarders)]
+    pharmacies = [sanitize_object(pharmacy) for pharmacy in storage.all(OnBoarders)]
     pharmacies_with_role_pharmacy = [
         pharmacy
         for pharmacy in pharmacies
