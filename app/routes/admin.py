@@ -171,7 +171,7 @@ def get_all_hospitals():
     return get_hospitals()
 
 
-@auth_bp.route("/doctors", methods=["GET"])
+@auth_bp.route("/doctors/<hospital_id>", methods=["GET"])
 @jwt_required()
 @swag_from(
     {
@@ -200,11 +200,11 @@ def get_all_hospitals():
         },
     }
 )
-def get_all_doctors():
-    return get_doctors()
+def get_all_doctors(hospital_id):
+    return get_doctors(hospital_id)
 
 
-@auth_bp.route("/pharmacists", methods=["GET"])
+@auth_bp.route("/pharmacists/<pharm_id>", methods=["GET"])
 @jwt_required()
 @swag_from(
     {
@@ -233,5 +233,5 @@ def get_all_doctors():
         },
     }
 )
-def get_all_phamacists():
-    return get_pharmacists()
+def get_all_phamacists(pharm_id >):
+    return get_pharmacists(pharm_id)

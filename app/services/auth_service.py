@@ -157,6 +157,7 @@ def login_user(data):
                 if user_role == Doctors:
                     user_role = "Doctor"
                 break
+        print(user_role)
         if user and check_password(data["password"], user.password):
             access_token = create_access_token(
                 identity=user.id, expires_delta=timedelta(days=2)
@@ -189,23 +190,25 @@ def get_hospitals():
     return jsonify({"error": "No hospitals found"})
 
 
-def get_doctors():
+def get_doctors(id):
     docs = [
         sanitize_object(doctor)
         for doctor in storage.all(Doctors)
         if doctor.user == "Doctor"
     ]
-    if docs and docs[0] and docs[0]["user"] == "Doctor":
-        return jsonify({"doctors": docs})
+    doc_hos = [doctor for doctor in docs if doctor and doctor["hospital_id"] == id]
+    if doc_hos:
+        return jsonify({"doctors": doc_hos})
     return jsonify({"error": "No doctors found"})
 
 
-def get_pharmacists():
+def get_pharmacists(id):
     pharms = [
         sanitize_object(pharmacist)
         for pharmacist in storage.all(Pharmacists)
         if pharmacist.user == "Pharmacist"
     ]
-    if pharms and pharms[0] and pharms[0]["role"] == "Pharmacist":
-        return jsonify({"pharmacists": pharms})
+    doc_hos = [pharm for pharm in pharms if pharm and pharm["hospital_id"] == id]
+    if doc_hos:
+        return jsonify({"success": doc_hos})
     return jsonify({"error": "No pharmacists found"})
