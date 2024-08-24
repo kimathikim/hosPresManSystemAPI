@@ -2,14 +2,15 @@ from flasgger import Swagger, swag_from
 from flask_cors import CORS
 from flask_mail import Mail
 from flask_jwt_extended import JWTManager
-from flask_redis import FlaskRedis
+
+# from flask_redis import FlaskRedis
 from flask_marshmallow import Marshmallow
 
 ma = Marshmallow()
 jwt = JWTManager()
 cors = CORS()
 mail = Mail()
-redis_store = FlaskRedis()
+# redis_store = FlaskRedis()
 swagger = Swagger(
     template={
         "swagger": "2.0",
@@ -41,4 +42,6 @@ def init_extensions(app):
     mail.init_app(app)
     cors.init_app(app, resources={r"/api/v1*": {"origins": "*"}})
     swagger.init_app(app)
-    redis_store.init_app(app)
+
+
+# redis_store.init_app(app)
