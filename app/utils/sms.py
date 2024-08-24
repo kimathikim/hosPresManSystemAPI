@@ -19,7 +19,7 @@ def send_code_to_patient(phone_number, patient_code):
     """This function sends a patient code via SMS."""
     try:
         message = f"Hello, your patient code is {patient_code}."
-        recipients = [f"+255{phone_number}"]
+        recipients = [f"+254{phone_number}"]
         africastalking.initialize(uname, api_key)
         sender = 796699970
         print(sender, recipients, message)
