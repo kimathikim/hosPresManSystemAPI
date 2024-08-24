@@ -233,5 +233,5 @@ def get_all_doctors(hospital_id):
         },
     }
 )
-def get_all_phamacists(pharm_id >):
+def get_all_phamacists(pharm_id):
     return get_pharmacists(pharm_id)
