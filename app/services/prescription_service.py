@@ -28,14 +28,14 @@ def get_patient(data):
     patient = storage.get_by_code(Patients, data)
     if not patient:
         return ({"error": "Patient not found"},)
-    return jsonify({"success": f"{sanitize_object((patient))}"}), 200
+    return jsonify({"success": sanitize_object((patient))}), 200
 
 
 def add_pres_med(data: dict):
     pres = storage.get(Prescription, data["prescription_id"])
     print(data)
     if not pres:
-        return jsonify({"error": "Prescription not  found"}), 400
+        return jsonify({"error": "Prescription not found"}), 400
     med = Med(**data)
     try:
         med.save()
