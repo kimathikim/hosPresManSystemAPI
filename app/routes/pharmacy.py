@@ -101,7 +101,7 @@ def prescription():
 @swag_from(
     {
         "security": [{"Bearer": []}],
-        "tags": ["Hospital", "Pharmacy"],
+        "tags": ["Hospital", "Pha"],
         "description": "Add meds for a specific prescription",
         "parameters": [
             {
