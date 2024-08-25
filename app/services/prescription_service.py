@@ -58,16 +58,18 @@ def update_prescription(data, pres_id):
 
 def get_prescription(otp_code):
     otp = storage.get_by_code(OTP, otp_code)
+    if not otp:
+        return {"error": "Invalid OTP code"}, 400
+    if otp.is_used:
+        storage.delete(obj=otp)
+        return {"error": "OTP code already used"}, 400
+
     otp = sanitize_object(otp)
     if otp is None:
         return (
             {"error": "OTP not found"},
             404,
         )
-    if otp.is_used:
-        storage.delete(obj=otp)
-        return {"error": "OTP code already used"}, 400
-
     prescription = storage.get(Prescription, otp["prescription_id"])
     if prescription is None:
         return ({"error": "Prescription not found"}), 404
