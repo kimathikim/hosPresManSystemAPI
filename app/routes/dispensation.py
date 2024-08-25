@@ -10,7 +10,7 @@ from app.models.pharmacist import Pharmacists
 from app.schemas.dispensation import dis
 
 
-@pharmacy_bp.route("/dispense/{pres_id}", methods=["POST"])
+@pharmacy_bp.route("/dispense/{pres_id}", methods=["GET"])
 @jwt_required()
 @swag_from(
     {
