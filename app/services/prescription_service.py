@@ -64,6 +64,10 @@ def get_prescription(otp_code):
             {"error": "OTP not found"},
             404,
         )
+    if otp.is_used:
+        storage.delete(obj=otp)
+        return {"error": "OTP code already used"}, 400
+
     prescription = storage.get(Prescription, otp["prescription_id"])
     if prescription is None:
         return ({"error": "Prescription not found"}), 404
