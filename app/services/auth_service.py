@@ -207,11 +207,8 @@ def get_doctors(id):
 
 
 def get_pharmacists(id):
-    pharms = [
-        sanitize_object(pharmacist)
-        for pharmacist in storage.all(Pharmacists)
-        if pharmacist.user == "Pharmacist"
-    ]
+    pharms = [sanitize_object(pharmacist)
+              for pharmacist in storage.all(Pharmacists)]
     doc_hos = [
         pharm for pharm in pharms if pharm is not None and pharm["pharmacy_id"] == id
     ]
