@@ -98,7 +98,7 @@ def prescription(otp_code):
     return get_prescription(otp_code)
 
 
-@pharmacy_bp.route("/dis/<pres_id>", methods=["GET"])
+@pharmacy_bp.route("/dis/<pres_id>/<otp_code>", methods=["GET"])
 @jwt_required()
 @swag_from(
     {
@@ -142,7 +142,7 @@ def prescription(otp_code):
         },
     }
 )
-def dispense_medication(pres_id):
+def dispense_medication(pres_id, otp_code):
     print("pres_id", pres_id)
     data = {}
     data["prescription_id"] = pres_id
@@ -153,7 +153,7 @@ def dispense_medication(pres_id):
     if pharmacist.pharmacy_id is None:
         return jsonify({"error": "Access Denied"}), 403
     data["dispensed_by"] = pharmacist_id
-    return dispensation(data)
+    return dispensation(data, otp_code)
 
 
 @pharmacy_bp.route("/prescriptions", methods=["GET"])
