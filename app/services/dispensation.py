@@ -13,9 +13,10 @@ def dispensation(data):
     update_prescription(pres, data["prescription_id"])
     try:
         newdispensation.save()
+        print(newdispensation)
         return {"message": "successfull dispensation"}
-    except:
-        return {"error": "Failed to dispense"}
+    except Exception as e:
+        return {"error": e}
 
 
 def list_medications():
