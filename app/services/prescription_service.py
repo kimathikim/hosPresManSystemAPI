@@ -25,9 +25,9 @@ def add_prescription(patient_code: str, data: dict):
 
 
 def get_patient(data):
-    patient = storage.get_by_code(Patients, data)
+    patient = storage.get_patient_code(Patients, data)
     if not patient:
-        return ({"error": "Patient not found"},)
+        return jsonify({"error": "Patient not found"}, 404)
     return jsonify({"success": sanitize_object((patient))}), 200
 
 
