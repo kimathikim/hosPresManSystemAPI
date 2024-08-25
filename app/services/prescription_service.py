@@ -12,7 +12,7 @@ from app.utils.sanitization import sanitize_object
 
 def add_prescription(patient_code: str, data: dict):
     data["prescription_code"] = prescription_code()
-    patient = storage.get_by_code(Patients, patient_code)
+    patient = storage.get_patient_code(Patients, patient_code)
     if not patient:
         return ({"error": "Patient not found"},)
     data["patient_id"] = patient.id
