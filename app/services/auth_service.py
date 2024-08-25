@@ -123,7 +123,7 @@ def register_staff(id, data):
     elif data.get("user"):
         user_role = data["user"]
         if user_role == "Pharmacist":
-            data["patient_code"] = id
+            data["pharmacy_id"] = id
     else:
         return {"error": "Role or user is required"}
 
@@ -173,7 +173,8 @@ def login_user(data):
 
 
 def get_pharmacies():
-    pharmacies = [sanitize_object(pharmacy) for pharmacy in storage.all(OnBoarders)]
+    pharmacies = [sanitize_object(pharmacy)
+                  for pharmacy in storage.all(OnBoarders)]
     pharmacies_with_role_pharmacy = [
         pharmacy
         for pharmacy in pharmacies
