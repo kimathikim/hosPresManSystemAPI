@@ -1,16 +1,16 @@
 from app.models.dispensation import Dispensation
-from flask import jsonify
 from app.models import storage
-from app.models.medication import Medication
+from app.services.prescription_service import update_prescription
 
 
 def dispensation(data):
-    fields = ["prescription_id", "pharmacy_id", "dispensed_by"]
+    fields = ["prescription_id", "dispensed_by"]
     for field in fields:
         if field not in data:
             return {"error": f"field {field} not found"}
-
     newdispensation = Dispensation(**data)
+    pres = {"is_dispensed": True}
+    update_prescription(pres, data["prescription_id"])
     try:
         newdispensation.save()
         return {"message": "successfull dispensation"}

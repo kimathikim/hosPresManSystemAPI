@@ -55,14 +55,14 @@ from app.schemas.dispensation import dis
     }
 )
 def dispense_medication(pres_id):
-    data = request.get_json()
+    data = {}
+    data["prescription_id"] = pres_id
     pharmacist_id = get_jwt_identity()
     pharmacist = storage.get(Pharmacists, pharmacist_id)
     if pharmacist is None:
         return jsonify({"error": "Failed"})
     if pharmacist.pharmacy_id is None:
         return jsonify({"error": "Access Denied"}), 403
-    data["pharmacy_id"] = pharmacist.pharmacy_id
     data["dispensed_by"] = pharmacist_id
     return dispensation(data)
 
