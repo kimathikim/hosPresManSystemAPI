@@ -1,16 +1,11 @@
 """Thuis moduel contains the routes for the pharmacy module."""
 
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from app.schemas.dispensation import dis
 from app.models.pharmacist import Pharmacists
 from app.models import storage
-from app.services.dispensation import dispensation, list_medications
+from app.services.dispensation import dispensation
 from flask import request, jsonify
-from werkzeug.utils import import_string
-from sqlalchemy.sql.selectable import Alias
-from flask import request
 from flasgger import swag_from
-from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.routes import pharmacy_bp
 from app.services.prescription_service import (
     update_prescription,
@@ -109,7 +104,7 @@ def prescription(otp_code):
     {
         "security": [{"Bearer": []}],
         "tags": ["Pharmacy"],
-        "description": "Dispense medication based on a prescription.",
+        "description": "Dispense medication based   on a prescription.",
         "parameters": [
             {
                 "name": "Authorization",
