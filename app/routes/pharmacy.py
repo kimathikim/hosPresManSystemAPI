@@ -98,7 +98,7 @@ def prescription(otp_code):
     return get_prescription(otp_code)
 
 
-@pharmacy_bp.route("/dis/{pres_id}", methods=["GET"])
+@pharmacy_bp.route("/dis/<pres_id>", methods=["GET"])
 @jwt_required()
 @swag_from(
     {
