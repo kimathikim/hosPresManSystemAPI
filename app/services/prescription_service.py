@@ -41,7 +41,7 @@ def add_pres_med(data: dict):
         med.save()
     except Exception as e:
         return jsonify({"error": str(e)}), 400
-    return jsonify({"success": med}), 201
+    return jsonify({"success": med.to_dict()}), 201
 
 
 def update_prescription(data, pres_id):
@@ -60,7 +60,7 @@ def get_prescription(data: dict):
     otp = storage.get_by_code(OTP, data["OTP_code"])
     if not otp:
         return ({"error": "OTP not found"},)
-    prescription = storage.get(Prescription, OTP.prescription_id)
+    prescription = storage.get(Prescription, otp["prescription_id"])
 
     return jsonify({"success": sanitize_object(prescription)}), 200
 
