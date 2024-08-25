@@ -117,7 +117,6 @@ class DBStorage:
     def get_by_code(self, cls, code):
         """get an object from the database"""
         if cls is not None and code is not None:
-            obj = self.__session.query(cls).filter_by(
-                patient_code=code).first()
+            obj = self.__session.query(cls).filter_by(otp_code=code).first()
             return obj
         return None

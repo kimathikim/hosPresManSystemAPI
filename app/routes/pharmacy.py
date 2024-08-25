@@ -55,7 +55,7 @@ def update_pres(pres_id):
     return update_prescription(data, pres_id)
 
 
-@pharmacy_bp.route("/OTP", methods=["POST"])
+@pharmacy_bp.route("/otp/<otp_code>", methods=["GET"])
 @jwt_required()
 @swag_from(
     {
@@ -91,9 +91,8 @@ def update_pres(pres_id):
         },
     },
 )
-def prescription():
-    data = request.get_json()
-    return get_prescription(data)
+def prescription(otp_code):
+    return get_prescription(otp_code)
 
 
 @pharmacy_bp.route("/prescriptions", methods=["GET"])

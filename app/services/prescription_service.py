@@ -56,13 +56,23 @@ def update_prescription(data, pres_id):
     return jsonify({"error": "Failed"})
 
 
-def get_prescription(data: dict):
-    otp = storage.get_by_code(OTP, data["OTP_code"])
-    if not otp:
-        return ({"error": "OTP not found"},)
+def get_prescription(otp_code):
+    otp = storage.get_by_code(OTP, otp_code)
+    otp = sanitize_object(otp)
+    if otp is None:
+        return (
+            {"error": "OTP not found"},
+            404,
+        )
     prescription = storage.get(Prescription, otp["prescription_id"])
-
-    return jsonify({"success": sanitize_object(prescription)}), 200
+    if prescription is None:
+        return ({"error": "Prescription not found"}), 404
+    medications = prescription.meds
+    prescription = sanitize_object(prescription)
+    if prescription is None:
+        return ({"error": "Prescription not found"}), 404
+    prescription["meds"] = [sanitize_object(med) for med in medications]
+    return jsonify({"success": prescription}), 200
 
 
 def get_all_prescriptions():
