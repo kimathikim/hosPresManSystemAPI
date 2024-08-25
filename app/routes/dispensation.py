@@ -10,7 +10,7 @@ from app.models.pharmacist import Pharmacists
 from app.schemas.dispensation import dis
 
 
-@pharmacy_bp.route("/dispense/{pres_id}", methods=["GET"])
+@pharmacy_bp.route("/dis/{pres_id}", methods=["GET"])
 @jwt_required()
 @swag_from(
     {
@@ -55,6 +55,7 @@ from app.schemas.dispensation import dis
     }
 )
 def dispense_medication(pres_id):
+    print("pres_id", pres_id)
     data = {}
     data["prescription_id"] = pres_id
     pharmacist_id = get_jwt_identity()
